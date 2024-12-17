@@ -20,7 +20,6 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data['title'] = 'HOME';
-		render('admin/home',$data);
+		http_response_code(404);
 	}
 }

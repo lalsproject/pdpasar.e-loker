@@ -20,6 +20,11 @@ class Admin extends CI_Controller {
 	public function index()
 	{
 		$data['title'] = 'Home Administrator';
+		$data['c_divisi'] = $this->db->get_where('tbl_divisi','flag_aktif = "Y"')->num_rows();
+		$data['c_lowongan'] = $this->db->get_where('tbl_lowongan','flag_aktif = "Y"')->num_rows();
+		$data['c_user'] = $this->db->get_where('tbl_user','flag_aktif = "Y"')->num_rows();
+		$data['c_lamaran'] = $this->db->get_where('tbl_lamaran','flag_aktif = "Y"')->num_rows();
+		$data['lamaran'] = $this->db->get('view_lamaran')->result();
 		render('admin/home',$data);
 	}
 
@@ -248,10 +253,10 @@ class Admin extends CI_Controller {
 					{
 						$pesan = "
 							
-							Selamat !! 
-							Anda Lolos Ditahap Berkas !! ✅
-							Lamaran : $lamaran->judul_lowongan
-							Divisi  : $lamaran->nama_divisi
+Selamat !! 
+Anda Lolos Ditahap Berkas !! ✅
+Lamaran : $lamaran->judul_lowongan
+Divisi  : $lamaran->nama_divisi
 
 						";
 						$res = sendMessage($pesan,$id_telegram);
@@ -264,10 +269,10 @@ class Admin extends CI_Controller {
 					{
 						$pesan = "
 							
-							Maaf !! 
-							Anda Belum Lolos 🥺
-							Lamaran : $lamaran->judul_lowongan
-							Divisi  : $lamaran->nama_divisi
+Maaf !! 
+Anda Belum Lolos 🥺
+Lamaran : $lamaran->judul_lowongan
+Divisi  : $lamaran->nama_divisi
 
 						";
 						$res = sendMessage($pesan,$id_telegram);

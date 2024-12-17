@@ -14,6 +14,8 @@ class Divisi extends CI_Controller {
 	public function index()
 	{
 		$data['title'] = 'homediv Divisi';
+		$data['c_lamaran'] = $this->db->get_where('view_lamaran','flag_aktif = "Y" AND id_divisi = "'.$this->session->userdata('id_divisi').'"')->num_rows();
+		$data['c_lowongan'] = $this->db->get_where('tbl_lowongan','flag_aktif = "Y" AND id_divisi = "'.$this->session->userdata('id_divisi').'"')->num_rows();
 		render('divisi/home',$data);
 	}
 
@@ -22,6 +24,7 @@ class Divisi extends CI_Controller {
 		$this->load->model('ModelLowongan','m_lowongan');
 		$data['title'] = 'Data Lowongan';
 		$data['lowongan'] = $this->m_lowongan->get_lowongan($this->session->userdata('id_divisi'));
+		
 		render('divisi/lowongan',$data);
 	}
 
@@ -207,10 +210,10 @@ class Divisi extends CI_Controller {
 					{
 						$pesan = "
 							
-							Selamat !! 
-							Anda Lulus Ditahap Tes !! ✅
-							Lamaran : $lamaran->judul_lowongan
-							Divisi  : $lamaran->nama_divisi
+Selamat !! 
+Anda Lulus Ditahap Tes !! ✅
+Lamaran : $lamaran->judul_lowongan
+Divisi  : $lamaran->nama_divisi
 
 						";
 						$res = sendMessage($pesan,$id_telegram);
@@ -218,15 +221,15 @@ class Divisi extends CI_Controller {
 				}
 				else 
 				{
-					$update = $this->db->update('tbl_lamaran', array('flag_berkas' => 'T','flag_tes'=>'T','flag_aktif' =>'N'),array('id_lamaran' => $id_lamaran, ));
+					$update = $this->db->update('tbl_lamaran', array('flag_tes'=>'T','flag_aktif' =>'N'),array('id_lamaran' => $id_lamaran, ));
 					if ($update)
 					{
 						$pesan = "
 							
-							Maaf !! 
-							Anda Belum Lulus  Tes 🥺
-							Lamaran : $lamaran->judul_lowongan
-							Divisi  : $lamaran->nama_divisi
+Maaf !! 
+Anda Belum Lulus  Tes 🥺
+Lamaran : $lamaran->judul_lowongan
+Divisi  : $lamaran->nama_divisi
 
 						";
 						$res = sendMessage($pesan,$id_telegram);
