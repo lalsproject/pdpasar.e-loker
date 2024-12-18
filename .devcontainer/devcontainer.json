@@ -1,0 +1,14 @@
+{
+  "name": "PHP 7.4 with MariaDB 10",
+  "updateContentCommand": "sudo apt-get update",
+  "features": {},
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "xdebug.php-debug",
+        "bmewburn.vscode-intelephense-client"
+      ]
+    }
+  }
+}
